@@ -8,8 +8,8 @@ library(leaflet)
 library(htmltools)
 
 # Cargar capas
-zmvm <- rgdal::readOGR("Data/zmvm", "zmvm")
-distritos <- rgdal::readOGR("Data/distritos", "EOD2017_Distritos")
+zmvm <- rgdal::readOGR("data", "zmvm")
+distritos <- rgdal::readOGR("data", "EOD2017_Distritos")
 
 # Construimos un objeto para establecer coordenadas del centro la CDMX
 lon <- -99.12766 
@@ -26,7 +26,7 @@ paleton <- colorFactor(palette = "Set3",
 # Elaborar mapa base para luego agregar las capas
 m_base2 <- leaflet(options = leafletOptions(
   minZoom = 10, dragging = TRUE)) %>% # Establecer un nivel de zoom fijo
-  addProviderTiles("CartoDB") # Establecer mapa base
+  addProviderTiles("CartoDB") %>% # Establecer mapa base
   setView(lng = zocalo$lon, lat = zocalo$lat, zoom = 9) %>% # Establecer punto central
   setMaxBounds(lng1 = zocalo$lon[1] + .6, # Establecer margenes del mapa 
                lat1 = zocalo$lat[1] + .65, 
@@ -62,5 +62,5 @@ Dis_EOD2017 <- m_base2 %>%
 Dis_EOD2017
 
 # Esxportar mapa
-htmlwidgets::saveWidget(Dis_EOD2017, file = "Export/disEOD2017.html") 
+htmlwidgets::saveWidget(Dis_EOD2017, file = "export/disEOD2017.html")
 
